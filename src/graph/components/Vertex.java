@@ -5,17 +5,22 @@ public class Vertex<T> {
     private String label;
     private T object;
 
-    public Vertex(String label){
+    public Vertex(){
         this.object = null;
-        this.label=label;
+        this.label = "Sem nome e Sem Objeto";
+    }
+
+    public Vertex(T object){
+        this.object = object;
+        this.label = "Sem Nome";
     }
     
-    public Vertex(int label){
+    public Vertex(String label){
         this.object = null;
         this.setLabel(label);
     }
 
-    public Vertex(T object, int label){
+    public Vertex(T object, String label){
         this.object = object;
         this.setLabel(label);
     }
@@ -24,8 +29,8 @@ public class Vertex<T> {
         return label;
     }
 
-    public void setLabel(int label) {
-        this.label ="V"+ label;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public T getObject() {
