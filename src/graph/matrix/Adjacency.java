@@ -2,6 +2,8 @@ package graph.matrix;
 
 import java.util.ArrayList;
 
+import graph.services.DecoStrings;
+
 public class Adjacency extends Matrix {
     public Adjacency() {
         super();
@@ -21,7 +23,6 @@ public class Adjacency extends Matrix {
     public int getDegreePositiveOfVertex(int v) {
         int degree = 0;
         ArrayList<Integer> line = this.getLine(v);
-        line.remove(0);
         for (int i : line) {
             degree += i;
         }
@@ -32,7 +33,6 @@ public class Adjacency extends Matrix {
     public int getDegreeNegativeOfVertex(int v) {
         int degree = 0;
         ArrayList<Integer> column = this.getColumn(v);
-        column.remove(0);
         for (int i : column) {
             degree += i;
         }
@@ -44,16 +44,29 @@ public class Adjacency extends Matrix {
         return this.getDegreePositiveOfVertex(v);
     }
 
+    @Override
+    public ArrayList<Integer> getLine(int l) {
+        ArrayList<Integer> line = super.getLine(l);
+        line.remove(0);
+        return line;
+    }
+
+    @Override
+    public ArrayList<Integer> getColumn(int c) {
+        ArrayList<Integer> column = super.getColumn(c);
+        column.remove(0);
+        return column;
+    }
+
     public ArrayList<Integer> getNeighbors(int v) {
         ArrayList<Integer> neighbors = new ArrayList<Integer>();
-        ArrayList<Integer> line = this.getLine(v);
-        for (Integer i : line) {
-            if (i >= 1) {
-                neighbors.add(line.indexOf(i));
+        for (int i = 1; i <= this.getC(); i++) {
+            if (this.get(v, i) >= 1) {
+                neighbors.add(i);
             }
         }
         if (neighbors.isEmpty()) {
-            neighbors.add(0);
+            neighbors.add(null);
         }
 
         return neighbors;
