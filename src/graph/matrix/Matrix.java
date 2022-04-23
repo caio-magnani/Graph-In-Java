@@ -39,6 +39,12 @@ public class Matrix {
         return column;
     }
 
+    public void setColumn(int olderColumn, int[] newerColunm) {
+        for (int l = 0; l < this.l; l++) {
+            set(l, olderColumn, newerColunm[l]);
+        }
+    }
+
     public void removeColumn(int column) {
         int[][] aux = new int[this.l][this.c - 1];
         for (int l = 0; l < this.l; l++) {
@@ -60,6 +66,12 @@ public class Matrix {
             line.add(this.matrix[l][c]);
         }
         return line;
+    }
+
+    public void setLine(int olderLine, int[] newerLine) {
+        for (int c = 0; c < this.c; c++) {
+            set(olderLine, c, newerLine[c]);
+        }
     }
 
     public void removeLine(int line) {
