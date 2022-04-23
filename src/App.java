@@ -1,27 +1,14 @@
-import graph.matrix.Adjacency;
+import graph.Graph;
+import graph.ValorableUndirectionalGraph;
+import graph.components.vertex.Vertex;
 
 public class App {
     public static void main(String[] args) {
-        Adjacency m = new Adjacency();
-        m.addVertex(1);
-        m.addVertex(2);
-        m.addVertex(3);
-        m.addVertex(4);
-        m.addVertex(5);
-        m.addVertex(6);
-        m.addEgdeUndirectional(1, 2);
-        m.addEgdeUndirectional(2, 3);
-        m.addEgdeUndirectional(2, 4);
-        m.addEgdeUndirectional(2, 5);
-        m.addEgdeDirectional(4, 5);
-        m.addLoop(1);
-        m.addLoop(3);
-        System.out.println("\nMatriz de Adjacencia:\n");
-        System.out.println(m);
-        System.out.println("Grau + do Vertice " + 1 + " = " + m.getDegreePositiveOfVertex(1));
-        System.out.println("Grau + do Vertice " + 4 + " = " + m.getDegreePositiveOfVertex(4));
-        System.out.println("Grau + do Vertice " + 5 + " = " + m.getDegreePositiveOfVertex(5));
-        System.out.println("Grau - do Vertice " + 5 + " = " + m.getDegreeNegativeOfVertex(5));
-        System.out.println("O Vertice " + 2 + " é Vizinho do " + m.getNeighbors(2).toString());
+        Graph g = new ValorableUndirectionalGraph();
+        g.addVertex(new Vertex("Brasil", 1));
+        g.addVertex(new Vertex("Belo Horizonte", 2));
+        System.out.println(g);
+        g.setVertex(new Vertex("Brasil", 1), new Vertex("Nova York", 1));
+        System.out.println(g);
     }
 }
