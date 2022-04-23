@@ -1,4 +1,4 @@
-package graph.services;
+package services;
 
 public class DecoStrings {
 
