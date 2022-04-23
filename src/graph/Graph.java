@@ -2,27 +2,47 @@ package graph;
 
 import java.util.TreeMap;
 
-import graph.components.Vertex;
-import graph.matrix.Adjacency;
+import graph.components.edge.Edge;
+import graph.components.vertex.Vertex;
+import graph.matrix.AdjacencyMatrix;
+import services.DecoStrings;
 
-public class Graph<T> {
-    private Adjacency matrix;
-    private TreeMap<Integer, Vertex<T>> vertexs;
-    int lastVertex;
+public abstract class Graph {
+    private AdjacencyMatrix matrix;
+    private TreeMap<Integer, Vertex> vertexs;
+    private TreeMap<Integer, Edge> edges;
+    protected int lastVertex;
 
-    public Graph() {
-        this.lastVertex = 0;
-        matrix = new Adjacency();
+    public Graph(TreeMap vertexs, TreeMap edges) {
+        this.edges = edges;
+        this.vertexs = vertexs;
+        this.matrix = new AdjacencyMatrix();
+        this.lastVertex = 1;
     }
 
-    // Não testado!
-    public void addVertex(Vertex<T> v) {
-        this.vertexs.put(lastVertex, v);
-        this.matrix.addVertex(lastVertex);
+    public void addVertex(Vertex v) {
+        v.setName(lastVertex);
         lastVertex++;
+        this.vertexs.put(v.getName(), v);
+        this.matrix.addVertex(v.getName());
     }
 
-    public void setVertex(Vertex<T> older, Vertex<T> newer) {
+    public void setVertex(Vertex older, Vertex newer) {
+        this.vertexs.replace(older.getName(), older, newer);
+    }
 
+    public void removeVertex(Vertex older, Vertex newer) {
+        this.vertexs.replace(older.getName(), older, newer);
+    }
+
+    @Override
+    public String toString() {
+        String str = new String();
+        for (Vertex v : vertexs.values()) {
+            str += "|" + v.getLabel()
+                    + " = " + DecoStrings.GREEN("" + v.getName());
+            str += "|\n";
+        }
+        return str + matrix.toString();
     }
 }
