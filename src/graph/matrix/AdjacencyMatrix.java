@@ -2,10 +2,12 @@ package graph.matrix;
 
 import java.util.ArrayList;
 
-import graph.services.DecoStrings;
+import services.DecoStrings;
 
-public class Adjacency extends Matrix {
-    public Adjacency() {
+public class AdjacencyMatrix extends Matrix {
+    int[] labels;
+
+    public AdjacencyMatrix() {
         super();
     }
 
@@ -17,31 +19,6 @@ public class Adjacency extends Matrix {
     public void removeVertex(int v) {
         this.removeLine(v);
         this.removeColumn(v);
-    }
-
-    // Pega O Grau do Vertice Positivo
-    public int getDegreePositiveOfVertex(int v) {
-        int degree = 0;
-        ArrayList<Integer> line = this.getLine(v);
-        for (int i : line) {
-            degree += i;
-        }
-        return degree;
-    }
-
-    // Pega O Grau do Vertice Negativo
-    public int getDegreeNegativeOfVertex(int v) {
-        int degree = 0;
-        ArrayList<Integer> column = this.getColumn(v);
-        for (int i : column) {
-            degree += i;
-        }
-        return degree;
-    }
-
-    // Pega O Grau do Vertice Não Direcionado
-    public int getDegreeOfVertexUndirectional(int v) {
-        return this.getDegreePositiveOfVertex(v);
     }
 
     @Override
@@ -60,7 +37,7 @@ public class Adjacency extends Matrix {
 
     public ArrayList<Integer> getNeighbors(int v) {
         ArrayList<Integer> neighbors = new ArrayList<Integer>();
-        for (int i = 1; i <= this.getC(); i++) {
+        for (int i = 1; i < this.getC(); i++) {
             if (this.get(v, i) >= 1) {
                 neighbors.add(i);
             }
@@ -72,31 +49,23 @@ public class Adjacency extends Matrix {
         return neighbors;
     }
 
-    public void addEgdeUndirectional(int v1, int v2) {
-        this.set(v1, v2, 1);
-        this.set(v2, v1, 1);
+    public void addUndirectionalEgde(int v1, int v2, int value) {
+        this.set(v1, v2, value);
+        this.set(v2, v1, value);
     }
 
-    public void removeEgdeUndirectional(int v1, int v2) {
+    public void removeUndirectionalEgde(int v1, int v2) {
         this.set(v1, v2, 0);
         this.set(v2, v1, 0);
 
     }
 
-    public void addEgdeDirectional(int origin, int destiny) {
-        this.set(origin, destiny, 1);
+    public void addDirectionalEgde(int origin, int destiny, int value) {
+        this.set(origin, destiny, value);
     }
 
-    public void removeEgdeDirectional(int origin, int destiny) {
+    public void removeDirectionalEgde(int origin, int destiny) {
         this.set(origin, destiny, 0);
-    }
-
-    public void addLoop(int v) {
-        this.set(v, v, 2);
-    }
-
-    public void removeLoop(int v) {
-        this.set(v, v, 0);
     }
 
     @Override
