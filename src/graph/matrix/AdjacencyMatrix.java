@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import services.DecoStrings;
 
 public class AdjacencyMatrix extends Matrix {
-    int[] labels;
 
     public AdjacencyMatrix() {
         super();
