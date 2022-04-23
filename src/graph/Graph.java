@@ -15,6 +15,7 @@ public class Graph<T> {
         matrix = new Adjacency();
     }
 
+    // Não testado!
     public void addVertex(Vertex<T> v) {
         this.vertexs.put(lastVertex, v);
         this.matrix.addVertex(lastVertex);
