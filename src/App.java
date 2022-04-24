@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import map.Map;
 import services.CsvReader;
+import services.DecoStrings;
 
 public class App {
     public static void main(String[] args) {
@@ -12,7 +13,8 @@ public class App {
     }
 
     public static void loadFileToMap(Map map) {
-        File br = new File("../database/br.csv");
+        File br = new File("../src/database/br.csv");
+        System.out.println(DecoStrings.RED("path = " + br.getAbsolutePath()));
         System.out.println(br.exists());
         ArrayList<String> linesOfFile = new ArrayList<>();
         try {
