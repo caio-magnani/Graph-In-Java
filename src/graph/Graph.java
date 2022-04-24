@@ -9,27 +9,33 @@ import graph.matrix.AdjacencyMatrix;
 import services.DecoStrings;
 
 public abstract class Graph<V extends Vertex, E extends Edge> {
-    private AdjacencyMatrix matrix;
-    private TreeMap<Integer, V> vertexs;
-    private TreeMap<Integer, E> edges;
+    protected AdjacencyMatrix matrix;
+    protected TreeMap<Integer, V> vertexs;
+    protected TreeMap<Integer, E> edges;
     protected static int lastVertex;
+    protected static int lastEdge;
 
     public Graph(TreeMap<Integer, V> vertexs,
             TreeMap<Integer, E> edges) {
         this.vertexs = vertexs;
         this.edges = edges;
-        this.matrix = new AdjacencyMatrix();
+        matrix = new AdjacencyMatrix();
         lastVertex = 1;
+        lastEdge = 1;
     }
 
-    public void addVertex(V v) {
+    public boolean addVertex(V v) {
+        if (this.vertexs.containsValue(v)) {
+            return false;
+        }
         this.vertexs.put(lastVertex, v);
-        this.matrix.set(0, lastVertex, 1);
-        this.matrix.set(lastVertex, 0, 1);
+        matrix.set(0, lastVertex, lastVertex);
+        matrix.set(lastVertex, 0, lastVertex);
         lastVertex++;
+        return true;
     }
 
-    public Vertex getVertex(String label) {
+    public V getVertex(String label) {
         for (Entry<Integer, V> entry : this.vertexs.entrySet()) {
             if (entry.getValue().getLabel().equals(label)) {
                 return entry.getValue();
@@ -37,6 +43,19 @@ public abstract class Graph<V extends Vertex, E extends Edge> {
         }
         return null;
     }
+
+    public int getPositionVertex(Vertex v) {
+        for (Entry<Integer, V> entry : this.vertexs.entrySet()) {
+            if (entry.getValue().equals(v)) {
+                return entry.getKey();
+            }
+        }
+        return 0;
+    }
+
+    public abstract boolean addEdge(E e);
+
+    public abstract E getEdge(String label);
 
     @Override
     public String toString() {

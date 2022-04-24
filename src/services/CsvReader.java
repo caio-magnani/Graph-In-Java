@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CsvReader {
-    public static String[] read(File file) throws FileNotFoundException {
+    public static ArrayList<String> read(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         ArrayList<String> strs = new ArrayList<>();
+        scanner.nextLine();
         while (scanner.hasNextLine()) {
             strs.add(scanner.nextLine());
         }
         scanner.close();
-        return (String[]) strs.toArray();
+        return strs;
     }
 }
