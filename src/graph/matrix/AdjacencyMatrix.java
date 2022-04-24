@@ -10,16 +10,6 @@ public class AdjacencyMatrix extends Matrix {
         super();
     }
 
-    public void addVertex(int v) {
-        set(v, 0, v);
-        set(0, v, v);
-    }
-
-    public void removeVertex(int v) {
-        this.removeLine(v);
-        this.removeColumn(v);
-    }
-
     @Override
     public ArrayList<Integer> getLine(int l) {
         ArrayList<Integer> line = super.getLine(l);
@@ -46,25 +36,6 @@ public class AdjacencyMatrix extends Matrix {
         }
 
         return neighbors;
-    }
-
-    public void addUndirectionalEgde(int v1, int v2, int value) {
-        this.set(v1, v2, value);
-        this.set(v2, v1, value);
-    }
-
-    public void removeUndirectionalEgde(int v1, int v2) {
-        this.set(v1, v2, 0);
-        this.set(v2, v1, 0);
-
-    }
-
-    public void addDirectionalEgde(int origin, int destiny, int value) {
-        this.set(origin, destiny, value);
-    }
-
-    public void removeDirectionalEgde(int origin, int destiny) {
-        this.set(origin, destiny, 0);
     }
 
     @Override

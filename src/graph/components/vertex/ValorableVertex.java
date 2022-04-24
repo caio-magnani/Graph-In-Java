@@ -5,8 +5,8 @@ import graph.components.Valorable;
 public class ValorableVertex<T> extends Vertex implements Valorable<T> {
     private T value;
 
-    public ValorableVertex(String label, int name, T value) {
-        super(label, name);
+    public ValorableVertex(String label, T value) {
+        super(label);
         this.value = value;
     }
 

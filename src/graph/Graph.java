@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import graph.components.edge.Edge;
 import graph.components.vertex.Vertex;
@@ -21,26 +22,25 @@ public abstract class Graph {
     }
 
     public void addVertex(Vertex v) {
-        v.setName(lastVertex);
+        this.vertexs.put(lastVertex, v);
+        this.matrix.set(0, lastVertex, lastVertex);
         lastVertex++;
-        this.vertexs.put(v.getName(), v);
-        this.matrix.addVertex(v.getName());
     }
 
-    public void setVertex(Vertex older, Vertex newer) {
-        this.vertexs.replace(older.getName(), older, newer);
-    }
-
-    public void removeVertex(Vertex older, Vertex newer) {
-        this.vertexs.replace(older.getName(), older, newer);
+    public Vertex getVertex(String label) {
+        for (Entry<Integer, Vertex> v : this.vertexs.entrySet()) {
+            if (v.getValue().getLabel().equals(label))
+                return v.getValue();
+        }
+        return null;
     }
 
     @Override
     public String toString() {
         String str = new String();
-        for (Vertex v : vertexs.values()) {
-            str += "|" + v.getLabel()
-                    + " = " + DecoStrings.GREEN("" + v.getName());
+        for (Entry<Integer, Vertex> v : this.vertexs.entrySet()) {
+            str += "|" + v.getValue().getLabel()
+                    + " = " + DecoStrings.GREEN("" + v.getKey());
             str += "|\n";
         }
         return str + matrix.toString();

@@ -5,8 +5,8 @@ import graph.components.Valorable;
 public class ValorableUndirectionalEdge<T> extends UndirectionalEdge implements Valorable<T> {
     private T value;
 
-    public ValorableUndirectionalEdge(String label, int name, int v1, int v2, T value) {
-        super(label, name, v1, v2);
+    public ValorableUndirectionalEdge(String label, int v1, int v2, T value) {
+        super(label, v1, v2);
         this.value = value;
     }
 

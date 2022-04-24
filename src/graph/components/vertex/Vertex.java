@@ -4,8 +4,8 @@ import graph.components.Component;
 
 public class Vertex extends Component {
 
-    public Vertex(String label, int name) {
-        super(label, name);
+    public Vertex(String label) {
+        super(label);
     }
 
     @Override

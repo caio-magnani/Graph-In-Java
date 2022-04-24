@@ -6,8 +6,8 @@ public abstract class Edge extends Component {
     private int v1;
     private int v2;
 
-    public Edge(String label, int name, int v1, int v2) {
-        super(label, name);
+    public Edge(String label, int v1, int v2) {
+        super(label);
         this.v1 = v1;
         this.v2 = v2;
     }
