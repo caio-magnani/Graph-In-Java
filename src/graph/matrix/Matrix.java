@@ -108,7 +108,7 @@ public class Matrix {
 
     private void grow() {
         int[][] aux = new int[this.l][this.c];
-        for (int l = 0; l < this.c; l++) {
+        for (int l = 0; l < this.l; l++) {
             for (int c = 0; c < this.c; c++) {
                 try {
                     aux[l][c] = this.matrix[l][c];

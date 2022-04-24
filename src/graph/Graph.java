@@ -12,18 +12,21 @@ public abstract class Graph<V extends Vertex, E extends Edge> {
     private AdjacencyMatrix matrix;
     private TreeMap<Integer, V> vertexs;
     private TreeMap<Integer, E> edges;
-    protected int lastVertex;
+    protected static int lastVertex;
 
     public Graph(TreeMap<Integer, V> vertexs,
             TreeMap<Integer, E> edges) {
         this.vertexs = vertexs;
         this.edges = edges;
         this.matrix = new AdjacencyMatrix();
-        this.lastVertex = 1;
+        lastVertex = 1;
     }
 
     public void addVertex(V v) {
         this.vertexs.put(lastVertex, v);
+        this.matrix.set(0, lastVertex, 1);
+        this.matrix.set(lastVertex, 0, 1);
+        lastVertex++;
     }
 
     public Vertex getVertex(String label) {
