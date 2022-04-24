@@ -8,29 +8,29 @@ import graph.components.vertex.Vertex;
 import graph.matrix.AdjacencyMatrix;
 import services.DecoStrings;
 
-public abstract class Graph {
+public abstract class Graph<V extends Vertex, E extends Edge> {
     private AdjacencyMatrix matrix;
-    private TreeMap<Integer, Vertex> vertexs;
-    private TreeMap<Integer, Edge> edges;
+    private TreeMap<Integer, V> vertexs;
+    private TreeMap<Integer, E> edges;
     protected int lastVertex;
 
-    public Graph(TreeMap vertexs, TreeMap edges) {
-        this.edges = edges;
+    public Graph(TreeMap<Integer, V> vertexs,
+            TreeMap<Integer, E> edges) {
         this.vertexs = vertexs;
+        this.edges = edges;
         this.matrix = new AdjacencyMatrix();
         this.lastVertex = 1;
     }
 
-    public void addVertex(Vertex v) {
+    public void addVertex(V v) {
         this.vertexs.put(lastVertex, v);
-        this.matrix.set(0, lastVertex, lastVertex);
-        lastVertex++;
     }
 
     public Vertex getVertex(String label) {
-        for (Entry<Integer, Vertex> v : this.vertexs.entrySet()) {
-            if (v.getValue().getLabel().equals(label))
-                return v.getValue();
+        for (Entry<Integer, V> entry : this.vertexs.entrySet()) {
+            if (entry.getValue().getLabel().equals(label)) {
+                return entry.getValue();
+            }
         }
         return null;
     }
@@ -38,7 +38,7 @@ public abstract class Graph {
     @Override
     public String toString() {
         String str = new String();
-        for (Entry<Integer, Vertex> v : this.vertexs.entrySet()) {
+        for (Entry<Integer, V> v : this.vertexs.entrySet()) {
             str += "|" + v.getValue().getLabel()
                     + " = " + DecoStrings.GREEN("" + v.getKey());
             str += "|\n";
