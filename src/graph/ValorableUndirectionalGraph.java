@@ -21,8 +21,8 @@ public class ValorableUndirectionalGraph<V extends ValorableVertex, E extends Va
         if (super.edges.containsValue(e))
             return false;
         super.edges.put(lastEdge, e);
-        super.matrix.set(e.getV1(), e.getV2(), e.getValue().intValue());
-        super.matrix.set(e.getV2(), e.getV1(), e.getValue().intValue());
+        super.matrix.set(e.getV1(), e.getV2(), e.getValue().doubleValue());
+        super.matrix.set(e.getV2(), e.getV1(), e.getValue().doubleValue());
         return true;
     }
 

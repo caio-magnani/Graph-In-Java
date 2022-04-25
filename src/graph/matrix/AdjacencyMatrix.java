@@ -11,15 +11,15 @@ public class AdjacencyMatrix extends Matrix {
     }
 
     @Override
-    public ArrayList<Integer> getLine(int l) {
-        ArrayList<Integer> line = super.getLine(l);
+    public ArrayList<Double> getLine(int l) {
+        ArrayList<Double> line = super.getLine(l);
         line.remove(0);
         return line;
     }
 
     @Override
-    public ArrayList<Integer> getColumn(int c) {
-        ArrayList<Integer> column = super.getColumn(c);
+    public ArrayList<Double> getColumn(int c) {
+        ArrayList<Double> column = super.getColumn(c);
         column.remove(0);
         return column;
     }

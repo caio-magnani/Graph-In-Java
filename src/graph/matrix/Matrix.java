@@ -3,7 +3,7 @@ package graph.matrix;
 import java.util.ArrayList;
 
 public class Matrix {
-    private int[][] matrix;
+    private double[][] matrix;
     private int c;
     private int l;
     /*
@@ -14,7 +14,7 @@ public class Matrix {
      */
 
     public Matrix() {
-        this.matrix = new int[1][1];
+        this.matrix = new double[1][1];
         this.l = 1;
         this.c = 1;
     }
@@ -27,12 +27,12 @@ public class Matrix {
         return c;
     }
 
-    public int get(int l, int c) {
+    public double get(int l, int c) {
         return this.matrix[l][c];
     }
 
-    public ArrayList<Integer> getColumn(int c) {
-        ArrayList<Integer> column = new ArrayList<Integer>();
+    public ArrayList<Double> getColumn(int c) {
+        ArrayList<Double> column = new ArrayList<Double>();
         for (int l = 0; l < this.l; l++) {
             column.add(this.matrix[l][c]);
         }
@@ -46,7 +46,7 @@ public class Matrix {
     }
 
     public void removeColumn(int column) {
-        int[][] aux = new int[this.l][this.c - 1];
+        double[][] aux = new double[this.l][this.c - 1];
         for (int l = 0; l < this.l; l++) {
             for (int c = 0; c < this.c; c++) {
                 if (c < column) {
@@ -60,8 +60,8 @@ public class Matrix {
         this.c -= 1;
     }
 
-    public ArrayList<Integer> getLine(int l) {
-        ArrayList<Integer> line = new ArrayList<Integer>();
+    public ArrayList<Double> getLine(int l) {
+        ArrayList<Double> line = new ArrayList<Double>();
         for (int c = 0; c < this.c; c++) {
             line.add(this.matrix[l][c]);
         }
@@ -75,7 +75,7 @@ public class Matrix {
     }
 
     public void removeLine(int line) {
-        int[][] aux = new int[this.l - 1][this.c];
+        double[][] aux = new double[this.l - 1][this.c];
         for (int c = 0; c < this.c; c++) {
             for (int l = 0; l < this.l; l++) {
                 if (l == line)
@@ -93,7 +93,7 @@ public class Matrix {
 
     // Matrix Manupulation
 
-    public void set(int line, int column, int value) {
+    public void set(int line, int column, double value) {
         try {
             this.matrix[line][column] = value;
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -107,7 +107,7 @@ public class Matrix {
     }
 
     private void grow() {
-        int[][] aux = new int[this.l][this.c];
+        double[][] aux = new double[this.l][this.c];
         for (int l = 0; l < this.l; l++) {
             for (int c = 0; c < this.c; c++) {
                 try {

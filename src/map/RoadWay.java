@@ -17,13 +17,13 @@ public class RoadWay extends ValorableUndirectionalEdge<Double> implements Compa
     }
 
     public static Double getDistanceBetween(City c1, City c2) {
-        int x = c1.getLat() - c2.getLat();
-        int y = c1.getLng() - c2.getLng();
-        int deslocation = (int) Math.round(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+        double x = c1.getLat() - c2.getLat();
+        double y = c1.getLng() - c2.getLng();
+        double deslocation = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
         return RoadWay.parseDegreesDeslocationToKm(deslocation);
     }
 
-    public static Double parseDegreesDeslocationToKm(Integer deslocation) {
+    public static Double parseDegreesDeslocationToKm(double deslocation) {
         return (double) deslocation * 111.045F;
     }
 
@@ -34,11 +34,15 @@ public class RoadWay extends ValorableUndirectionalEdge<Double> implements Compa
     }
 
     @Override
+    public boolean equals(Object obj) {
+        RoadWay objRW = (RoadWay) obj;
+        return ((this.getV1() == objRW.getV1() && this.getV2() == objRW.getV2())
+                ||
+                (this.getV1() == objRW.getV2() && this.getV2() == objRW.getV1()));
+    }
+
+    @Override
     public int compareTo(RoadWay o) {
-        if (this.getDistance() == o.getDistance())
-            return 0;
-        if (this.getDistance() > o.getDistance())
-            return 1;
-        return -1;
+        return this.getDistance().compareTo(o.getDistance());
     }
 }

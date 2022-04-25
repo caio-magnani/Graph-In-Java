@@ -7,13 +7,19 @@ import graph.components.vertex.ValorableVertex;
 public class City extends ValorableVertex<BigInteger> {
     private int lat;
     private int lng;
-    private BigInteger population;
 
     public City(String name, Integer lat, Integer lng, BigInteger population) {
         super(name, population);
         this.lat = lat;
         this.lng = lng;
-        this.population = population;
+    }
+
+    // 0, 1, 2, 3, 4, 5, 6, 7, 8
+    // São Paulo,-23.5504,-46.6339,Brazil,BR,São Paulo,admin,22046000,12252023
+    public City(String[] infos) {
+        super(infos[0], new BigInteger(infos[8]));
+        this.lat = Math.round(new Float(infos[1]));
+        this.lng = Math.round(new Float(infos[2]));
     }
 
     public String getName() {
@@ -37,11 +43,11 @@ public class City extends ValorableVertex<BigInteger> {
     }
 
     public BigInteger getPopulation() {
-        return population;
+        return super.getValue();
     }
 
     public void setPopulation(BigInteger population) {
-        this.population = population;
+        super.setValue(population);
     }
 
     @Override
