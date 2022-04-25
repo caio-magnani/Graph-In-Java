@@ -1,70 +1,61 @@
 package graph;
 
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
+import graph.components.Component;
 import graph.components.edge.Edge;
 import graph.components.vertex.Vertex;
-import graph.matrix.AdjacencyMatrix;
-import services.DecoStrings;
+import graph.matrix.Cell;
 
-public abstract class Graph<V extends Vertex, E extends Edge> {
-    protected AdjacencyMatrix matrix;
+public abstract class Graph<V extends Vertex, E extends Edge> extends AdjacencyMatrix<V, E> {
+
     protected TreeMap<Integer, V> vertexs;
     protected TreeMap<Integer, E> edges;
-    protected static int lastVertex;
-    protected static int lastEdge;
+    private int lastVertex;
 
-    public Graph(TreeMap<Integer, V> vertexs,
-            TreeMap<Integer, E> edges) {
-        this.vertexs = vertexs;
-        this.edges = edges;
-        matrix = new AdjacencyMatrix();
-        lastVertex = 1;
-        lastEdge = 1;
+    public Graph() {
+        super();
+        this.lastVertex = 0;
+        this.vertexs = new TreeMap<Integer, V>();
+        this.edges = new TreeMap<Integer, E>();
+        this.addCell(new Cell<Component>(new Component(""), 0, 0));
     }
 
-    public boolean addVertex(V v) {
-        if (this.vertexs.containsValue(v)) {
-            return false;
-        }
-        this.vertexs.put(lastVertex, v);
-        matrix.set(0, lastVertex, lastVertex);
-        matrix.set(lastVertex, 0, lastVertex);
-        lastVertex++;
-        return true;
+    public int getLastVertex() {
+        return ++this.lastVertex;
     }
 
-    public V getVertex(String label) {
-        for (Entry<Integer, V> entry : this.vertexs.entrySet()) {
-            if (entry.getValue().getLabel().equals(label)) {
-                return entry.getValue();
-            }
-        }
-        return null;
+    protected void addVertexInTreeMap(V v) {
+        this.vertexs.put(v.getId(), v);
     }
 
-    public int getPositionVertex(Vertex v) {
-        for (Entry<Integer, V> entry : this.vertexs.entrySet()) {
-            if (entry.getValue().equals(v)) {
-                return entry.getKey();
-            }
-        }
-        return 0;
+    protected void removeVertexInTreeMap(V v) {
+        this.vertexs.remove((Object) v);
     }
 
-    public abstract boolean addEdge(E e);
+    protected void setVertexInTreeMap(V older, V newer) {
+        this.removeVertexInTreeMap(older);
+        this.addVertexInTreeMap(newer);
+    }
 
-    public abstract E getEdge(String label);
+    protected V getVertexInTreeMap(int id) {
+        return this.vertexs.get(id);
+    }
 
-    @Override
-    public String toString() {
-        String str = new String();
-        for (Entry<Integer, V> v : this.vertexs.entrySet()) {
-            str += "|" + v.getValue().getLabel()
-                    + " = " + DecoStrings.GREEN("" + v.getKey());
-            str += "|\n";
-        }
-        return str + matrix.toString();
+    protected void addEdgeInTreeMap(E e) {
+        this.edges.put(e.getId(), e);
+    }
+
+    protected void removeEdgeInTreeMap(E e) {
+        this.edges.remove((Object) e);
+    }
+
+    protected void setEdgeInTreeMap(E older, E newer) {
+        this.removeEdgeInTreeMap(newer);
+        this.addEdgeInTreeMap(newer);
+    }
+
+    protected E getEdgeInTreeMap(int id) {
+        return this.edges.get(id);
     }
 }

@@ -1,6 +1,7 @@
 package graph.components.edge;
 
 import graph.components.Component;
+import services.DecoStrings;
 
 public abstract class Edge extends Component {
     private int v1;
@@ -26,5 +27,10 @@ public abstract class Edge extends Component {
 
     public void setV2(int v2) {
         this.v2 = v2;
+    }
+
+    @Override
+    public String toString() {
+        return DecoStrings.GREEN(super.toString());
     }
 }

@@ -1,6 +1,7 @@
 package graph.components.vertex;
 
 import graph.components.Component;
+import services.DecoStrings;
 
 public class Vertex extends Component {
 
@@ -9,9 +10,7 @@ public class Vertex extends Component {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        Vertex objVertex = (Vertex) obj;
-        return this.getLabel().equals(objVertex.getLabel());
+    public String toString() {
+        return DecoStrings.BLUE(super.toString());
     }
-
 }

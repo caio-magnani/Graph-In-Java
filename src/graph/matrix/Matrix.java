@@ -2,133 +2,88 @@ package graph.matrix;
 
 import java.util.ArrayList;
 
-public class Matrix {
-    private double[][] matrix;
-    private int c;
-    private int l;
-    /*
-     * |00| 01 | 02 | 03 |
-     * |01|0101|0102|0103|
-     * |02|0201|0202|0203|
-     * |03|0301|0302|0303|
-     */
+public class Matrix<T> {
+    private ArrayList<Cell<T>> cells;
+    private int[][] positions;
+    private int lines;
+    private int columns;
 
     public Matrix() {
-        this.matrix = new double[1][1];
-        this.l = 1;
-        this.c = 1;
+        this.cells = new ArrayList<Cell<T>>();
+        this.lines = 1;
+        this.columns = 1;
+        this.positions = new int[lines][columns];
     }
 
-    public int getL() {
-        return l;
+    public int getLines() {
+        return lines;
     }
 
-    public int getC() {
-        return c;
+    private void setLines(int lines) {
+        this.lines = lines;
     }
 
-    public double get(int l, int c) {
-        return this.matrix[l][c];
+    public int getColumns() {
+        return columns;
     }
 
-    public ArrayList<Double> getColumn(int c) {
-        ArrayList<Double> column = new ArrayList<Double>();
-        for (int l = 0; l < this.l; l++) {
-            column.add(this.matrix[l][c]);
-        }
-        return column;
+    private void setColunms(int columns) {
+        this.columns = columns;
     }
 
-    public void setColumn(int olderColumn, int[] newerColunm) {
-        for (int l = 0; l < this.l; l++) {
-            set(l, olderColumn, newerColunm[l]);
-        }
+    public void addCell(Cell<T> cell) {
+        this.cells.add(cell);
+        this.set(cell.getLine(), cell.getColumn(), this.cells.indexOf(cell));
     }
 
-    public void removeColumn(int column) {
-        double[][] aux = new double[this.l][this.c - 1];
-        for (int l = 0; l < this.l; l++) {
-            for (int c = 0; c < this.c; c++) {
-                if (c < column) {
-                    aux[l][c] = this.matrix[l][c];
-                }
-                if (c > column)
-                    aux[l][c - 1] = this.matrix[l][c];
-            }
-        }
-        this.matrix = aux;
-        this.c -= 1;
+    public Cell<T> getCell(int line, int column) {
+        return this.cells.get(this.positions[line][column]);
     }
 
-    public ArrayList<Double> getLine(int l) {
-        ArrayList<Double> line = new ArrayList<Double>();
-        for (int c = 0; c < this.c; c++) {
-            line.add(this.matrix[l][c]);
-        }
-        return line;
-    }
-
-    public void setLine(int olderLine, int[] newerLine) {
-        for (int c = 0; c < this.c; c++) {
-            set(olderLine, c, newerLine[c]);
-        }
-    }
-
-    public void removeLine(int line) {
-        double[][] aux = new double[this.l - 1][this.c];
-        for (int c = 0; c < this.c; c++) {
-            for (int l = 0; l < this.l; l++) {
-                if (l == line)
-                    aux[l][c] = 0;
-                else if (l < line) {
-                    aux[l][c] = this.matrix[l][c];
-                }
-                if (l > line)
-                    aux[l - 1][c] = this.matrix[l][c];
-            }
-        }
-        this.matrix = aux;
-        this.l -= 1;
-    }
-
-    // Matrix Manupulation
-
-    public void set(int line, int column, double value) {
-        try {
-            this.matrix[line][column] = value;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            if (line > this.l - 1)
-                this.l = line + 1;
-            if (column > this.c - 1)
-                this.c = column + 1;
-            grow();
-            this.matrix[line][column] = value;
-        }
-    }
-
-    private void grow() {
-        double[][] aux = new double[this.l][this.c];
-        for (int l = 0; l < this.l; l++) {
-            for (int c = 0; c < this.c; c++) {
-                try {
-                    aux[l][c] = this.matrix[l][c];
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    aux[l][c] = 0;
-                }
-            }
-        }
-        this.matrix = aux;
+    public Cell<T> setCell(Cell<T> newer) {
+        return this.cells.set(this.positions[newer.getLine()][newer.getColumn()], newer);
     }
 
     @Override
     public String toString() {
         String s = new String();
-        for (int l = 0; l < this.l; l++) {
-            for (int c = 0; c < this.c; c++) {
-                s += "|" + this.matrix[l][c];
+        for (int l = 0; l < this.getLines(); l++) {
+            for (int c = 0; c < this.getColumns(); c++) {
+                if (this.positions[l][c] < 0)
+                    s += "|" + "n";
+                else
+                    s += "|" + this.cells.get(this.positions[l][c]).getValue();
             }
             s += "|\n";
         }
         return s;
+    }
+
+    // positions manipulations
+    private void set(int line, int column, int value) {
+        try {
+            this.positions[line][column] = value;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            if (line > this.getLines() - 1)
+                this.setLines(line + 1);
+            if (column > this.getColumns() - 1)
+                this.setColunms(column + 1);
+            grow();
+            this.positions[line][column] = value;
+        }
+    }
+
+    private void grow() {
+        int[][] aux = new int[this.getLines()][this.getColumns()];
+        for (int l = 0; l < this.getLines(); l++) {
+            for (int c = 0; c < this.getColumns(); c++) {
+                try {
+                    aux[l][c] = this.positions[l][c];
+                } catch (IndexOutOfBoundsException e) {
+                    aux[l][c] = -1;
+                }
+            }
+        }
+        this.positions = aux;
     }
 }

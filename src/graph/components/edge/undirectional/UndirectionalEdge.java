@@ -9,4 +9,9 @@ public class UndirectionalEdge extends Edge {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        UndirectionalEdge objEdge = (UndirectionalEdge) obj;
+        return this.getLabel().equals(objEdge.getLabel());
+    }
 }

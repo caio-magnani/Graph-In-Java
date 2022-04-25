@@ -18,9 +18,4 @@ public class ValorableVertex<T> extends Vertex implements Valorable<T> {
     public void setValue(T value) {
         this.value = value;
     }
-
-    @Override
-    public String toString() {
-        return super.toString() + " have a value = " + this.value;
-    }
 }

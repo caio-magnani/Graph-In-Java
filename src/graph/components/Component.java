@@ -1,10 +1,17 @@
 package graph.components;
 
-public abstract class Component {
+public class Component {
+    private static int lastId = -1;
+    private int id;
     private String label;
 
     public Component(String label) {
+        this.id = ++lastId;
         this.label = label;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public String getLabel() {
@@ -16,7 +23,13 @@ public abstract class Component {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        Component compObj = (Component) obj;
+        return this.id == compObj.id;
+    }
+
+    @Override
     public String toString() {
-        return this.label;
+        return "" + this.getId();
     }
 }

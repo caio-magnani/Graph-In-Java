@@ -1,57 +1,52 @@
 package map;
 
-import java.math.BigInteger;
+public class City {
+    private String name;
+    private Integer population;
+    private Double lat;
+    private Double lng;
 
-import graph.components.vertex.ValorableVertex;
-
-public class City extends ValorableVertex<BigInteger> {
-    private int lat;
-    private int lng;
-
-    public City(String name, Integer lat, Integer lng, BigInteger population) {
-        super(name, population);
+    public City(String name, Double lat, Double lng, Integer population) {
+        this.name = name;
+        this.population = population;
         this.lat = lat;
         this.lng = lng;
-    }
-
-    // 0, 1, 2, 3, 4, 5, 6, 7, 8
-    // São Paulo,-23.5504,-46.6339,Brazil,BR,São Paulo,admin,22046000,12252023
-    public City(String[] infos) {
-        super(infos[0], new BigInteger(infos[8]));
-        this.lat = Math.round(new Float(infos[1]));
-        this.lng = Math.round(new Float(infos[2]));
     }
 
     public String getName() {
-        return this.getLabel();
+        return name;
     }
 
-    public Integer getLat() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(Integer population) {
+        this.population = population;
+    }
+
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(Integer lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public Integer getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(Integer lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    public BigInteger getPopulation() {
-        return super.getValue();
-    }
-
-    public void setPopulation(BigInteger population) {
-        super.setValue(population);
     }
 
     @Override
     public String toString() {
-        return this.getName() + " have a population of " + this.getPopulation() + " people";
+        return "lat -> " + getLat() + ", lng -> " + getLng() + ", population -> " + getPopulation();
     }
 }
