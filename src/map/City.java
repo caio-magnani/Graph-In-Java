@@ -6,7 +6,7 @@ public class City {
     private Double lat;
     private Double lng;
 
-    public City(String name, Double lat, Double lng, Integer population) {
+    public City(String name, Double lat, Double lng, int population) {
         this.name = name;
         this.population = population;
         this.lat = lat;

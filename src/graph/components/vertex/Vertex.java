@@ -10,6 +10,12 @@ public class Vertex extends Component {
     }
 
     @Override
+    public String infos() {
+        // TODO Auto-generated method stub
+        return DecoStrings.BLUE(super.infos());
+    }
+
+    @Override
     public String toString() {
         return DecoStrings.BLUE(super.toString());
     }

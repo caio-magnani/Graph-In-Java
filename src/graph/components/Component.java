@@ -22,10 +22,8 @@ public class Component {
         this.label = label;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Component compObj = (Component) obj;
-        return this.id == compObj.id;
+    public String infos() {
+        return this.getId() + " - " + getLabel();
     }
 
     @Override
