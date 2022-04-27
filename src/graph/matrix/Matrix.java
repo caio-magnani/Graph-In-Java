@@ -15,7 +15,34 @@ public class Matrix<T> {
         this.positions = new int[lines][columns];
     }
 
-    public int getLines() {
+    public ArrayList<Cell<T>> getCells() {
+        return cells;
+    }
+
+    public void addValue(T value, int line, int column) {
+        Cell<T> newer = new Cell<T>(value, line, column);
+        this.cells.add(newer);
+        this.set(line, column, this.cells.indexOf(newer));
+    }
+
+    public T getValue(int line, int column) {
+        return cells.get(this.positions[line][column]).getValue();
+    }
+
+    public int getPositionOf(T value) {
+        int position = 0;
+        for (Cell<T> cell : cells) {
+            if (cell.getValue().equals(value))
+                position = cell.getLine() + cell.getColumn();
+        }
+        return position;
+    }
+
+    public void setValue(T value, int line, int column) {
+        cells.set(this.positions[line][column], new Cell<T>(value, line, column));
+    }
+
+    protected int getLines() {
         return lines;
     }
 
@@ -23,7 +50,7 @@ public class Matrix<T> {
         this.lines = lines;
     }
 
-    public int getColumns() {
+    protected int getColumns() {
         return columns;
     }
 
@@ -31,17 +58,36 @@ public class Matrix<T> {
         this.columns = columns;
     }
 
-    public void addCell(Cell<T> cell) {
+    protected void addCell(Cell<T> cell) {
         this.cells.add(cell);
         this.set(cell.getLine(), cell.getColumn(), this.cells.indexOf(cell));
     }
 
-    public Cell<T> getCell(int line, int column) {
+    protected Cell<T> getCell(int line, int column) {
         return this.cells.get(this.positions[line][column]);
     }
 
-    public Cell<T> setCell(Cell<T> newer) {
+    protected Cell<T> getCell(T value) {
+        for (Cell<T> cell : cells) {
+            if (this.equals(value))
+                return cell;
+        }
+        return null;
+    }
+
+    protected Cell<T> setCell(Cell<T> newer) {
         return this.cells.set(this.positions[newer.getLine()][newer.getColumn()], newer);
+    }
+
+    public void print() {
+        for (Cell<T> c : this.cells) {
+            System.out.println("line = "
+                    + c.getLine()
+                    + ", column = "
+                    + c.getColumn()
+                    + ", value = "
+                    + c.getValue().toString());
+        }
     }
 
     @Override

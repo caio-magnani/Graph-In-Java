@@ -30,6 +30,11 @@ public abstract class Edge extends Component {
     }
 
     @Override
+    public String infos() {
+        return DecoStrings.GREEN(super.infos());
+    }
+
+    @Override
     public String toString() {
         return DecoStrings.GREEN(super.toString());
     }

@@ -12,6 +12,8 @@ public class UndirectionalEdge extends Edge {
     @Override
     public boolean equals(Object obj) {
         UndirectionalEdge objEdge = (UndirectionalEdge) obj;
-        return this.getLabel().equals(objEdge.getLabel());
+        return (this.getV1() == objEdge.getV1() && this.getV2() == objEdge.getV2())
+                ||
+                (this.getV1() == objEdge.getV2() && this.getV2() == objEdge.getV1());
     }
 }

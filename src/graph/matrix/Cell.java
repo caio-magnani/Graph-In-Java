@@ -35,11 +35,17 @@ public class Cell<T> {
         this.column = column;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
-        Cell<T> objCell = (Cell<T>) obj;
-        return (this.line == objCell.getLine() && this.column == objCell.getColumn());
+        Cell<T> objCell = null;
+
+        try {
+            objCell = (Cell<T>) obj;
+        } catch (ClassCastException e) {
+            return false;
+        }
+        return (this.getLine() == objCell.getLine() && this.getColumn() == objCell.getColumn());
     }
 
     @Override
