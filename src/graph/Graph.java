@@ -8,7 +8,7 @@ import graph.matrix.Cell;
 import services.DecoStrings;
 
 public abstract class Graph<V extends Vertex, E extends Edge> {
-    protected AdjacencyMatrix<V,E> matrix;
+    protected AdjacencyMatrix<V, E> matrix;
     private int lastVertex;
 
     public Graph() {
@@ -41,12 +41,12 @@ public abstract class Graph<V extends Vertex, E extends Edge> {
         s += DecoStrings.YELLOW("----------------------------------------\n");
         s += DecoStrings.BLUE("Vertexs:\n");
         for (Vertex v : this.matrix.getAllVertexs()) {
-            s += v.infos() + "\n";
+            s += v + "\n";
         }
         s += DecoStrings.YELLOW("----------------------------------------\n");
         s += DecoStrings.GREEN("Edges:\n");
         for (Edge e : this.matrix.getAllEdges()) {
-            s += e.infos() + "\n";
+            s += e + "\n";
         }
         s += DecoStrings.YELLOW("----------------------------------------\n");
         return s + this.matrix.toString();

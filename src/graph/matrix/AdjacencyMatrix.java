@@ -20,13 +20,13 @@ public class AdjacencyMatrix<V extends Component, E extends Component> extends M
         return vertexs;
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayList<E> getAllEdges() {
         ArrayList<E> edges = new ArrayList<>();
         for (int l = 1; l < this.getLines(); l++) {
-            for (int c = 1; c < this.getColumns(); c++) {
+            for (int c = 1; c <= this.getColumns(); c++) {
                 try {
-                    if (!edges.contains((E) this.getCell(l, c).getValue()))
-                        edges.add((E) this.getCell(l, c).getValue());
+                    edges.add((E) this.getCell(l, c).getValue());
                 } catch (IndexOutOfBoundsException e) {
                     // ignore, do nothing
                 }
@@ -41,9 +41,9 @@ public class AdjacencyMatrix<V extends Component, E extends Component> extends M
         for (int l = 0; l < this.getLines(); l++) {
             for (int c = 0; c < this.getColumns(); c++) {
                 try {
-                    s += DecoStrings.CYAN("|") + this.getCell(l, c).getValue();
+                    s += DecoStrings.CYAN("|") + this.getCell(l, c).getValue().toPrintMatrix();
                 } catch (IndexOutOfBoundsException e) {
-                    s += DecoStrings.CYAN("|") + "n";
+                    s += DecoStrings.CYAN("|") + DecoStrings.BLACK("n");
                 }
             }
             s += DecoStrings.CYAN("|\n");
