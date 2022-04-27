@@ -3,17 +3,18 @@ package graph;
 import graph.components.Component;
 import graph.components.edge.Edge;
 import graph.components.vertex.Vertex;
+import graph.matrix.AdjacencyMatrix;
 import graph.matrix.Cell;
 import services.DecoStrings;
 
-public abstract class Graph {
-    protected AdjacencyMatrix matrix;
+public abstract class Graph<V extends Vertex, E extends Edge> {
+    protected AdjacencyMatrix<V,E> matrix;
     private int lastVertex;
 
     public Graph() {
         super();
         this.lastVertex = 0;
-        this.matrix = new AdjacencyMatrix();
+        this.matrix = new AdjacencyMatrix<V, E>();
         this.matrix.addValue(new Component("\\"), 0, 0);
     }
 

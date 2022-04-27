@@ -1,32 +1,31 @@
 package map;
 
-public class City {
-    private String name;
-    private Integer population;
+import graph.components.vertex.ValorableVertex;
+
+public class City extends ValorableVertex<Integer>{
     private Double lat;
     private Double lng;
 
     public City(String name, Double lat, Double lng, int population) {
-        this.name = name;
-        this.population = population;
+        super(name, population);
         this.lat = lat;
         this.lng = lng;
     }
 
     public String getName() {
-        return name;
+        return this.getLabel();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.setLabel(name);
     }
 
     public Integer getPopulation() {
-        return population;
+        return this.getValue();
     }
 
     public void setPopulation(Integer population) {
-        this.population = population;
+        this.setValue(population);
     }
 
     public Double getLat() {
@@ -43,10 +42,5 @@ public class City {
 
     public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    @Override
-    public String toString() {
-        return "lat -> " + getLat() + ", lng -> " + getLng() + ", population -> " + getPopulation();
     }
 }

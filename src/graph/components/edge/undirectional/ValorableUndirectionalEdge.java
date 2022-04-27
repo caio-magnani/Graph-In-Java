@@ -15,11 +15,6 @@ public class ValorableUndirectionalEdge<T> extends UndirectionalEdge implements 
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
     public void setValue(T value) {
         this.value = value;
     }

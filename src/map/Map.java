@@ -1,58 +1,49 @@
 package map;
 
-import java.util.Map.Entry;
 import java.util.ArrayList;
 
 import graph.ValorableUndirectionalGraph;
-import graph.components.edge.undirectional.ValorableUndirectionalEdge;
-import graph.components.vertex.ValorableVertex;
+import graph.components.vertex.Vertex;
 
 public class Map extends ValorableUndirectionalGraph<City, RoadWay> {
-
+    public static final Double RADIO_OF_EARTH = Double.parseDouble("6378.1370");
     public Map() {
         super();
     }
-
-    public Map(ArrayList<String> strings) {
+    public Map(ArrayList<String> infos){
         super();
-        for (String strs : strings) {
-            String[] s = strs.split(",");
-            City city = new City(
-                    s[0],
-                    Double.parseDouble(s[1]),
-                    Double.parseDouble(s[2]),
-                    Integer.parseInt(s[8]));
-
-            addVertex(new ValorableVertex<City>(city.getName(), city));
+        for (String str : infos) {
+            String[] s = str.split(",");
+            this.addCity(new City(s[0], Double.parseDouble(s[1]), Double.parseDouble(s[2]), Integer.parseInt(s[8])));
         }
-        generateEdges();
+        generateRoads();
     }
+
+    private void generateRoads() {
+        for (City c : this.matrix.getAllVertexs()) {
+            generateRoadsOf(c);   
+        }
+    }
+
+    private void generateRoadsOf(City v){
+        for (City c : this.matrix.getAllVertexs()) {
+            RoadWay road = new RoadWay(c, v);
+            if((!this.matrix.getAllEdges().contains(road)) && !(road.getV1()==road.getV2()))
+                this.addRoad(road);
+        }
+    }
+
+    public static Double toRad(Double value) {
+        return value * Math.PI / 180;
+    }
+
+    
 
     public void addCity(City c) {
-        this.addVertex(new ValorableVertex<City>(c.getName(), c));
+        addComponent(c);
     }
 
-    public void addRoad(RoadWay r, City a, City b) {
-        int v1Id = this.getVertex(a.getName()).getId();
-        int v2Id = this.getVertex(b.getName()).getId();
-        this.addEdge(new ValorableUndirectionalEdge<RoadWay>(r.getName(), v1Id, v2Id, r));
-    }
-
-    private void generateEdges() {
-        for (Entry<Integer, ValorableVertex<City>> e : this.vertexs.entrySet()) {
-            generateEdgesOf(e.getValue());
-        }
-    }
-
-    private void generateEdgesOf(ValorableVertex<City> v) {
-        for (Entry<Integer, ValorableVertex<City>> e : this.vertexs.entrySet()) {
-            RoadWay road = new RoadWay(v.getValue(), e.getValue().getValue());
-            ValorableUndirectionalEdge<RoadWay> edge = new ValorableUndirectionalEdge<>(
-                    road.getName(),
-                    this.getCell(e.getValue()).getLine(),
-                    this.getCell(v).getColumn(), road);
-            if (!this.edges.containsValue(edge))
-                this.addEdge(edge);
-        }
+    public void addRoad(RoadWay road) {
+        addComponent(road);
     }
 }

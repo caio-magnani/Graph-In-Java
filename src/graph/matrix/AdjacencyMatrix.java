@@ -1,34 +1,32 @@
-package graph;
+package graph.matrix;
 
 import java.util.ArrayList;
 
 import graph.components.Component;
-import graph.components.edge.Edge;
-import graph.components.vertex.Vertex;
-import graph.matrix.Matrix;
 import services.DecoStrings;
 
-public class AdjacencyMatrix extends Matrix<Component> {
+public class AdjacencyMatrix<V extends Component, E extends Component> extends Matrix<Component> {
 
     public AdjacencyMatrix() {
         super();
     }
 
-    public ArrayList<Vertex> getAllVertexs() {
-        ArrayList<Vertex> vertexs = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    public ArrayList<V> getAllVertexs() {
+        ArrayList<V> vertexs = new ArrayList<>();
         for (int c = 1; c < this.getColumns(); c++) {
-            vertexs.add((Vertex) this.getCell(0, c).getValue());
+            vertexs.add((V) this.getCell(0, c).getValue());
         }
         return vertexs;
     }
 
-    public ArrayList<Edge> getAllEdges() {
-        ArrayList<Edge> edges = new ArrayList<>();
+    public ArrayList<E> getAllEdges() {
+        ArrayList<E> edges = new ArrayList<>();
         for (int l = 1; l < this.getLines(); l++) {
             for (int c = 1; c < this.getColumns(); c++) {
                 try {
-                    if (!edges.contains((Edge) this.getCell(l, c).getValue()))
-                        edges.add((Edge) this.getCell(l, c).getValue());
+                    if (!edges.contains((E) this.getCell(l, c).getValue()))
+                        edges.add((E) this.getCell(l, c).getValue());
                 } catch (IndexOutOfBoundsException e) {
                     // ignore, do nothing
                 }
