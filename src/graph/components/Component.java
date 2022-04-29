@@ -24,11 +24,14 @@ public class Component {
 
     public String toPrintMatrix() {
         return "" + this.getId();
+    }
 
+    public void notUsed() {
+        --lastId;
     }
 
     @Override
     public String toString() {
-        return this.getId() + " - " + getLabel();
+        return "" + this.getId();
     }
 }

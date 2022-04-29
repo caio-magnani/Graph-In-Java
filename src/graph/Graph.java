@@ -7,15 +7,13 @@ import graph.matrix.AdjacencyMatrix;
 import graph.matrix.Cell;
 import services.DecoStrings;
 
-public abstract class Graph<V extends Vertex, E extends Edge> {
-    protected AdjacencyMatrix<V, E> matrix;
+public abstract class Graph<V extends Vertex, E extends Edge, A extends AdjacencyMatrix<V, E>> {
+    protected A matrix;
     private int lastVertex;
 
     public Graph() {
         super();
         this.lastVertex = 0;
-        this.matrix = new AdjacencyMatrix<V, E>();
-        this.matrix.addValue(new Component("\\"), 0, 0);
     }
 
     protected int getLastVertex() {
@@ -49,6 +47,6 @@ public abstract class Graph<V extends Vertex, E extends Edge> {
             s += e + "\n";
         }
         s += DecoStrings.YELLOW("----------------------------------------\n");
-        return s + this.matrix.toString();
+        return s + this.matrix;
     }
 }

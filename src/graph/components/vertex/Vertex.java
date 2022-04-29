@@ -17,6 +17,6 @@ public class Vertex extends Component {
 
     @Override
     public String toString() {
-        return DecoStrings.BLUE(super.toString());
+        return DecoStrings.BLUE(super.toString()) + " - " + DecoStrings.YELLOW(getLabel());
     }
 }
