@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class CsvReader {
-    public static ArrayList<String> loadFile()
+    public static ArrayList<String> loadFile(String namefile)
             throws FileNotFoundException, UnsupportedEncodingException {
 
         ArrayList<String> strs = new ArrayList<>();

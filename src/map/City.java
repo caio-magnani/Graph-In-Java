@@ -2,7 +2,7 @@ package map;
 
 import graph.components.vertex.ValorableVertex;
 
-public class City extends ValorableVertex<Integer>{
+public class City extends ValorableVertex<Integer> {
     private Double lat;
     private Double lng;
 
@@ -42,5 +42,10 @@ public class City extends ValorableVertex<Integer>{
 
     public void setLng(Double lng) {
         this.lng = lng;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", " + "(" + this.lat + ", " + this.getLng() + ")";
     }
 }

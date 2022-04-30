@@ -10,13 +10,13 @@ public class Vertex extends Component {
     }
 
     @Override
-    public String infos() {
+    public String toPrintMatrix() {
         // TODO Auto-generated method stub
-        return DecoStrings.BLUE(super.infos());
+        return DecoStrings.BLUE(super.toPrintMatrix());
     }
 
     @Override
     public String toString() {
-        return DecoStrings.BLUE(super.toString());
+        return DecoStrings.BLUE(super.toString()) + " - " + DecoStrings.YELLOW(getLabel());
     }
 }

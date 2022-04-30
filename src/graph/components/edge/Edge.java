@@ -30,8 +30,9 @@ public abstract class Edge extends Component {
     }
 
     @Override
-    public String infos() {
-        return DecoStrings.GREEN(super.infos());
+    public String toPrintMatrix() {
+        // TODO Auto-generated method stub
+        return DecoStrings.GREEN(super.toPrintMatrix());
     }
 
     @Override

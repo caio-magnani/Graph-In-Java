@@ -29,15 +29,6 @@ public class Matrix<T> {
         return cells.get(this.positions[line][column]).getValue();
     }
 
-    public int getPositionOf(T value) {
-        int position = 0;
-        for (Cell<T> cell : cells) {
-            if (cell.getValue().equals(value))
-                position = cell.getLine() + cell.getColumn();
-        }
-        return position;
-    }
-
     public void setValue(T value, int line, int column) {
         cells.set(this.positions[line][column], new Cell<T>(value, line, column));
     }

@@ -22,8 +22,12 @@ public class Component {
         this.label = label;
     }
 
-    public String infos() {
-        return this.getId() + " - " + getLabel();
+    public String toPrintMatrix() {
+        return "" + this.getId();
+    }
+
+    public void notUsed() {
+        --lastId;
     }
 
     @Override
