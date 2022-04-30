@@ -1,7 +1,6 @@
 package graph.matrix;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import graph.components.Component;
 import graph.components.edge.Edge;
@@ -20,6 +19,15 @@ public class AdjacencyMatrix<V extends Vertex, E extends Edge> extends Matrix<Co
                 return v;
         }
         return null;
+    }
+    public int getPositionOfVertex(Vertex value) {
+        int position = 0;
+        for (int l = 1; l < this.getLines(); l++) {
+            Cell<Component> cell =this.getCell(l, 0);
+            if (cell.getValue().equals(value))
+                position = cell.getLine() + cell.getColumn();
+        }
+        return position;
     }
 
     @SuppressWarnings("unchecked")

@@ -33,6 +33,10 @@ public abstract class Graph<V extends Vertex, E extends Edge, A extends Adjacenc
         return vertex.getLine() + vertex.getColumn();
     }
 
+    public String matrixToString(){
+        return this.matrix.toString();
+    }
+
     @Override
     public String toString() {
         String s = new String();

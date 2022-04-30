@@ -6,7 +6,12 @@ import services.CsvReader;
 
 public class App {
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
-        Map m = new Map(CsvReader.loadFile());
+        Map m;
+        try{
+            m = new Map(CsvReader.loadFile(args[0]));
+        }catch(IndexOutOfBoundsException e){
+            m = new Map(CsvReader.loadFile("br.csv"));
+        }
         System.out.println(m);
     }
 }

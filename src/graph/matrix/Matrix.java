@@ -29,16 +29,6 @@ public class Matrix<T> {
         return cells.get(this.positions[line][column]).getValue();
     }
 
-    public int getPositionOfVertex(T value) {
-        int position = 0;
-        for (int l = 1; l < this.getLines(); l++) {
-            Cell<T> cell =this.getCell(l, 0);
-            if (cell.getValue().equals(value))
-                position = cell.getLine() + cell.getColumn();
-        }
-        return position;
-    }
-
     public void setValue(T value, int line, int column) {
         cells.set(this.positions[line][column], new Cell<T>(value, line, column));
     }
