@@ -1,5 +1,7 @@
 package graph;
 
+import java.util.ArrayList;
+
 import graph.components.Component;
 import graph.components.edge.undirectional.ValorableUndirectionalEdge;
 import graph.components.vertex.ValorableVertex;
@@ -22,6 +24,10 @@ public class ValorableUndirectionalGraph<V extends ValorableVertex, E extends Va
 
     public V getVertex(int id) {
         return this.matrix.getVertex(id);
+    }
+
+    public ArrayList<V> getAllVertexs() {
+        return this.matrix.getAllVertexs();
     }
 
     public void addComponent(E e) {
