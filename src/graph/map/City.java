@@ -1,8 +1,8 @@
-package map;
+package graph.map;
 
-import graph.components.vertex.ValorableVertex;
+import graph.components.Vertex;
 
-public class City extends ValorableVertex<Integer> {
+class City extends Vertex<Integer> {
     private Double lat;
     private Double lng;
 

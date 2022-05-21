@@ -1,29 +1,33 @@
-package map;
+package graph.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import graph.ValorableUndirectionalGraph;
+import graph.Graph;
 
-public class Map extends ValorableUndirectionalGraph<City, RoadWay> {
+public class Map extends Graph<City, RoadWay> {
     public static final Double RADIO_OF_EARTH = Double.parseDouble("6378.1370");
 
     public Map() {
         super();
     }
 
-    public Map(ArrayList<String> infos) {
+    public Map(ArrayList<String> objects) {
         super();
-        for (String str : infos) {
-            String[] s = str.split(",");
-            this.addCity(new City(s[0], Double.parseDouble(s[1]), Double.parseDouble(s[2]), Integer.parseInt(s[8])));
+        for (String object : objects) {
+            String[] params = object.split(",");
+            // s[0] = Nome
+            // s[1] = Latitude
+            // s[2] = Longetude
+            this.addCity(new City(params[0], Double.parseDouble(params[1]), Double.parseDouble(params[2]),
+                    Integer.parseInt(params[8])));
         }
         generateRoads();
     }
 
     private void generateRoads() {
-        ArrayList<City> cities = this.matrix.getAllVertexs();
-        for (City c : this.matrix.getAllVertexs()) {
+        ArrayList<City> cities = this.getAllVertexs();
+        for (City c : this.getAllVertexs()) {
             generateRoadsOf(c, cities);
             cities.remove(c);
         }
@@ -37,16 +41,16 @@ public class Map extends ValorableUndirectionalGraph<City, RoadWay> {
     }
 
     public ArrayList<RoadWay> the3Closest(City c) {
-        ArrayList<RoadWay> roadWays = this.matrix.getAllEdgesOf(c);
+        ArrayList<RoadWay> roadWays = this.getAllEdgesOf(c);
         Collections.sort(roadWays);
-        ArrayList<RoadWay> returnRoadWays =  new ArrayList<>();
+        ArrayList<RoadWay> returnRoadWays = new ArrayList<>();
         returnRoadWays.addAll(roadWays.subList(0, 3));
         return returnRoadWays;
     }
 
     public String stringAllCitys() {
         String s = new String();
-        for (City c : this.matrix.getAllVertexs()) {
+        for (City c : this.getAllVertexs()) {
             s += c.toString() + "\n";
         }
         return s;
@@ -71,7 +75,7 @@ public class Map extends ValorableUndirectionalGraph<City, RoadWay> {
     public void addComponent(RoadWay e) {
         int vertexPosition1 = this.getPositionOf(e.getV1());
         int vertexPosition2 = this.getPositionOf(e.getV2());
-        if(vertexPosition1 != vertexPosition2){
+        if (vertexPosition1 != vertexPosition2) {
             this.matrix.addValue(e, vertexPosition1, vertexPosition2);
             this.matrix.addValue(e, vertexPosition2, vertexPosition1);
         }
@@ -81,13 +85,13 @@ public class Map extends ValorableUndirectionalGraph<City, RoadWay> {
     public String toString() {
         String s = new String();
         ArrayList<City> cities = this.matrix.getAllVertexs();
-        s+="Cities:\n";
+        s += "Cities:\n";
         for (City city : cities) {
             s += city;
             ArrayList<RoadWay> roadWays = this.the3Closest(city);
             s += "with a road way of 3 closest citys:\n";
             for (RoadWay road : roadWays) {
-                s += road+"\n";
+                s += road + "\n";
             }
         }
         return s;

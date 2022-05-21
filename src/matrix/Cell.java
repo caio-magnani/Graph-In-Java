@@ -1,4 +1,4 @@
-package graph.matrix;
+package matrix;
 
 public class Cell<T> {
     private T value;
