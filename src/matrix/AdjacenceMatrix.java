@@ -46,7 +46,6 @@ public class AdjacenceMatrix<V extends Vertex<? extends Number>, E extends Edge<
         return edges;
     }
 
-    @SuppressWarnings("unchecked")
     public ArrayList<E> getAllEdgesOf(int id) {
         ArrayList<E> edges = new ArrayList<E>();
         for (int c = 1; c < this.getColumns(); c++) {

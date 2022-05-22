@@ -2,6 +2,7 @@ package graph.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import graph.Graph;
 
@@ -31,21 +32,7 @@ public class Map extends Graph<City, RoadWay> {
             cities.remove(c);
             generateRoadsOf(c, cities);
         }
-        filterRoadWays();
-    }
-
-    private void filterRoadWays() {
-        ArrayList<City> cities = this.getAllVertexs();
-        ArrayList<RoadWay> filteredRoadWays = new ArrayList<>();
-        ArrayList<RoadWay> toRemoveRoadWays = new ArrayList<>();
-        for (City city : cities) {
-            filteredRoadWays.addAll(this.the3Closest(city));
-        }
-        toRemoveRoadWays.addAll(this.getAllEdges());
-        toRemoveRoadWays.removeAll(filteredRoadWays);
-        for (RoadWay road : toRemoveRoadWays) {
-            this.removeComponent(road);
-        }
+        // filterRoadWays();
     }
 
     private void generateRoadsOf(City c, ArrayList<City> cities) {
@@ -86,7 +73,6 @@ public class Map extends Graph<City, RoadWay> {
 
     @Override
     public void removeComponent(RoadWay r) {
-        // TODO Auto-generated method stub
         super.removeComponent(r);
     }
 
@@ -95,6 +81,21 @@ public class Map extends Graph<City, RoadWay> {
         if (r.getV1() != r.getV2() && this.getEdge(r.getV1(), r.getV2()) == null) {
             super.addComponent(r);
         }
+    }
+
+    public void printEdges() {
+        ArrayList<RoadWay> roadWays = this.getAllEdges();
+        for (RoadWay roadWay : roadWays) {
+            System.out.println(roadWay);
+        }
+    }
+
+    public void printVertexs() {
+        ArrayList<City> cities = this.getAllVertexs();
+        for (City city : cities) {
+            System.out.println(city);
+        }
+
     }
 
     public String matrixToString() {
