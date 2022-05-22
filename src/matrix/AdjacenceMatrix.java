@@ -35,10 +35,24 @@ public class AdjacenceMatrix<V extends Vertex<? extends Number>, E extends Edge<
         return vertexs;
     }
 
-    public ArrayList<E> getAllEdgesOf(V vertex) {
+    public ArrayList<E> getAllEdges() {
         ArrayList<E> edges = new ArrayList<E>();
-        for (int c = 0; c < this.getColumns(); c++) {
-            edges.add(this.getValue());
+        for (int l = 1; l < this.getLines(); l++)
+            for (int c = 1; c < l; c++) {
+                E edge = this.getEdge(l, c);
+                if (edge != null)
+                    edges.add(edge);
+            }
+        return edges;
+    }
+
+    @SuppressWarnings("unchecked")
+    public ArrayList<E> getAllEdgesOf(int id) {
+        ArrayList<E> edges = new ArrayList<E>();
+        for (int c = 1; c < this.getColumns(); c++) {
+            E edge = this.getEdge(id, c);
+            if (edge != null)
+                edges.add(edge);
         }
         return edges;
     }
@@ -53,14 +67,22 @@ public class AdjacenceMatrix<V extends Vertex<? extends Number>, E extends Edge<
         this.removeCollumn(toRemove.getId());
     }
 
+    @SuppressWarnings("unchecked")
+    public E getEdge(int v1, int v2) {
+        try {
+            return (E) this.getValue(v1, v2);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
     public void addEdge(E e) {
         addValue(e, e.getV1(), e.getV2());
         addValue(e, e.getV2(), e.getV1());
     }
 
     public void removeEdge(E toRemove) {
-        removeCell(new Cell<Component>(toRemove, toRemove.getV1(), toRemove.getV2()));
-        removeCell(new Cell<Component>(toRemove, toRemove.getV2(), toRemove.getV1()));
+        removeValue(toRemove);
     }
 
     @Override

@@ -19,81 +19,110 @@ public class Map extends Graph<City, RoadWay> {
             // s[0] = Nome
             // s[1] = Latitude
             // s[2] = Longetude
-            this.addCity(new City(params[0], Double.parseDouble(params[1]), Double.parseDouble(params[2]),
+            this.addComponent(new City(params[0], Double.parseDouble(params[1]), Double.parseDouble(params[2]),
                     Integer.parseInt(params[8])));
         }
         generateRoads();
     }
 
-    private void generateRoads() {
+    public void generateRoads() {
         ArrayList<City> cities = this.getAllVertexs();
         for (City c : this.getAllVertexs()) {
-            generateRoadsOf(c, cities);
             cities.remove(c);
+            generateRoadsOf(c, cities);
+        }
+        filterRoadWays();
+    }
+
+    private void filterRoadWays() {
+        ArrayList<City> cities = this.getAllVertexs();
+        ArrayList<RoadWay> filteredRoadWays = new ArrayList<>();
+        ArrayList<RoadWay> toRemoveRoadWays = new ArrayList<>();
+        for (City city : cities) {
+            filteredRoadWays.addAll(this.the3Closest(city));
+        }
+        toRemoveRoadWays.addAll(this.getAllEdges());
+        toRemoveRoadWays.removeAll(filteredRoadWays);
+        for (RoadWay road : toRemoveRoadWays) {
+            this.removeComponent(road);
         }
     }
 
-    private void generateRoadsOf(City v, ArrayList<City> cities) {
-        for (City c : cities) {
-            RoadWay road = new RoadWay(c, v);
-            this.addRoad(road);
+    private void generateRoadsOf(City c, ArrayList<City> cities) {
+        for (City city : cities) {
+            RoadWay road = new RoadWay(c, city);
+            this.addComponent(road);
         }
     }
 
     public ArrayList<RoadWay> the3Closest(City c) {
-        ArrayList<RoadWay> roadWays = this.getAllEdgesOf(c);
+        ArrayList<RoadWay> roadWays = this.getAllEdgesOf(c.getId());
         Collections.sort(roadWays);
         ArrayList<RoadWay> returnRoadWays = new ArrayList<>();
-        returnRoadWays.addAll(roadWays.subList(0, 3));
-        return returnRoadWays;
+        try {
+            returnRoadWays.addAll(roadWays.subList(0, 3));
+            return returnRoadWays;
+        } catch (IndexOutOfBoundsException e) {
+            return roadWays;
+        }
     }
 
     public String stringAllCitys() {
         String s = new String();
         for (City c : this.getAllVertexs()) {
-            s += c.toString() + "\n";
+            s += c + "\n";
         }
         return s;
-    }
-
-    public static Double toRad(Double value) {
-        return value * Math.PI / 180;
-    }
-
-    public void addCity(City c) {
-        addComponent(c);
     }
 
     public City getCity(int id) {
         return this.getVertex(id);
     }
 
-    public void addRoad(RoadWay road) {
-        addComponent(road);
+    @Override
+    public void addComponent(City c) {
+        super.addComponent(c);
     }
 
-    public void addComponent(RoadWay e) {
-        int vertexPosition1 = this.getPositionOf(e.getV1());
-        int vertexPosition2 = this.getPositionOf(e.getV2());
-        if (vertexPosition1 != vertexPosition2) {
-            this.matrix.addValue(e, vertexPosition1, vertexPosition2);
-            this.matrix.addValue(e, vertexPosition2, vertexPosition1);
+    @Override
+    public void removeComponent(RoadWay r) {
+        // TODO Auto-generated method stub
+        super.removeComponent(r);
+    }
+
+    @Override
+    public void addComponent(RoadWay r) {
+        if (r.getV1() != r.getV2() && this.getEdge(r.getV1(), r.getV2()) == null) {
+            super.addComponent(r);
         }
+    }
+
+    public String matrixToString() {
+        return super.toString();
     }
 
     @Override
     public String toString() {
         String s = new String();
-        ArrayList<City> cities = this.matrix.getAllVertexs();
+        ArrayList<City> cities = this.getAllVertexs();
         s += "Cities:\n";
         for (City city : cities) {
             s += city;
-            ArrayList<RoadWay> roadWays = this.the3Closest(city);
-            s += "with a road way of 3 closest citys:\n";
-            for (RoadWay road : roadWays) {
-                s += road + "\n";
+            ArrayList<RoadWay> roadWays = this.getAllEdgesOf(city.getId());
+            s += "\nwith a road way of 3 closest citys:\n";
+            Collections.sort(roadWays);
+            for (int i = 0; i < 3; i++) {
+                try {
+                    s += roadWays.get(i) + "\n";
+                } catch (IndexOutOfBoundsException e) {
+                    // ignore
+                }
             }
         }
         return s;
+    }
+
+    public static Double toRad(Double value) {
+        return value * Math.PI / 180;
     }
 }

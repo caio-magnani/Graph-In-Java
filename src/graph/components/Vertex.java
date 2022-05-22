@@ -27,4 +27,11 @@ public class Vertex<V extends Number> extends Component {
     public String toMatrix() {
         return DecoStrings.BLUE(super.toMatrix());
     }
+
+    @Override
+    public String toString() {
+        return DecoStrings.BLUE(super.toString())
+                + " - " + DecoStrings.BLUE(this.getLabel())
+                + ", " + DecoStrings.PURPLE(this.getValue().toString());
+    }
 }

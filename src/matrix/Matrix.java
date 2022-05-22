@@ -29,10 +29,13 @@ public class Matrix<T> {
         cells.set(this.positions[line][column], new Cell<T>(value, line, column));
     }
 
-    @SuppressWarnings("null")
     protected void removeValue(T value) {
-        Cell<T> toRemove = this.getCell(value);
-        this.removeCell(toRemove);
+        try {
+            Cell<T> toRemove = this.getCell(value);
+            this.removeCell(toRemove);
+        } catch (NullPointerException e) {
+            // ignore
+        }
     }
 
     protected int getLines() {
@@ -82,7 +85,7 @@ public class Matrix<T> {
 
     protected Cell<T> getCell(T value) {
         for (Cell<T> cell : cells) {
-            if (this.equals(value))
+            if (cell.getValue().equals(value))
                 return cell;
         }
         return null;

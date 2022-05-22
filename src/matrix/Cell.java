@@ -39,13 +39,12 @@ public class Cell<T> {
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         Cell<T> objCell = null;
-
         try {
             objCell = (Cell<T>) obj;
         } catch (ClassCastException e) {
             return false;
         }
-        return (this.getLine() == objCell.getLine() && this.getColumn() == objCell.getColumn());
+        return (this.getValue().equals(objCell.getValue()));
     }
 
     @Override

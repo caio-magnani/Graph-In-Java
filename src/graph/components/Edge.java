@@ -38,8 +38,29 @@ public class Edge<V extends Number> extends Component {
         this.v2 = v2;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean equals(Object obj) {
+        Edge<V> oEdge;
+        try {
+            oEdge = (Edge<V>) obj;
+        } catch (Exception e) {
+            return false;
+        }
+        return ((this.getV1() == oEdge.getV1() && this.getV2() == oEdge.getV2())
+                ||
+                (this.getV1() == oEdge.getV2() && this.getV2() == oEdge.getV1())) ? true : false;
+    }
+
     @Override
     public String toMatrix() {
         return DecoStrings.GREEN(super.toMatrix());
     }
+
+    @Override
+    public String toString() {
+        return DecoStrings.GREEN(super.toString())
+                + " - " + DecoStrings.GREEN(this.getLabel());
+    }
+
 }

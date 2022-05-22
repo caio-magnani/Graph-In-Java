@@ -1,8 +1,9 @@
 package graph.map;
 
 import graph.components.Vertex;
+import services.DecoStrings;
 
-class City extends Vertex<Integer> {
+public class City extends Vertex<Integer> {
     private Double lat;
     private Double lng;
 
@@ -46,6 +47,7 @@ class City extends Vertex<Integer> {
 
     @Override
     public String toString() {
-        return super.toString() + ", " + "(" + this.lat + ", " + this.getLng() + ")";
+        return super.toString() + ", " + "(" + DecoStrings.YELLOW(this.lat + "°") + ", "
+                + DecoStrings.YELLOW(this.getLng() + "°") + ")";
     }
 }

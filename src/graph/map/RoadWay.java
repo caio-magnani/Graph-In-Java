@@ -38,7 +38,11 @@ public class RoadWay extends Edge<Double> implements Comparable<RoadWay> {
 
     @Override
     public int compareTo(RoadWay r) {
-        return this.getDistance().compareTo(r.getDistance());
+        try {
+            return this.getDistance().compareTo(r.getDistance());
+        } catch (NullPointerException e) {
+            return +1;
+        }
     }
 
     @Override
