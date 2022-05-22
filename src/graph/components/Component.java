@@ -1,6 +1,7 @@
 package graph.components;
 
 public class Component {
+
     private static int lastId = -1;
     private int id;
     private String label;
@@ -22,12 +23,8 @@ public class Component {
         this.label = label;
     }
 
-    public String toPrintMatrix() {
+    public String toMatrix() {
         return "" + this.getId();
-    }
-
-    public void notUsed() {
-        --lastId;
     }
 
     @Override

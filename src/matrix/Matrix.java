@@ -1,4 +1,4 @@
-package graph.matrix;
+package matrix;
 
 import java.util.ArrayList;
 
@@ -15,22 +15,23 @@ public class Matrix<T> {
         this.positions = new int[lines][columns];
     }
 
-    public ArrayList<Cell<T>> getCells() {
-        return cells;
-    }
-
-    public void addValue(T value, int line, int column) {
+    protected void addValue(T value, int line, int column) {
         Cell<T> newer = new Cell<T>(value, line, column);
         this.cells.add(newer);
         this.set(line, column, this.cells.indexOf(newer));
     }
 
-    public T getValue(int line, int column) {
+    protected T getValue(int line, int column) {
         return cells.get(this.positions[line][column]).getValue();
     }
 
-    public void setValue(T value, int line, int column) {
+    protected void setValue(T value, int line, int column) {
         cells.set(this.positions[line][column], new Cell<T>(value, line, column));
+    }
+
+    protected void removeValue(T value) {
+        Cell<T> toRemove = this.getCell(value);
+        this.removeCell(toRemove);
     }
 
     protected int getLines() {
@@ -41,12 +42,32 @@ public class Matrix<T> {
         this.lines = lines;
     }
 
+    protected void removeLine(int line) {
+        for (int c = 0; c < this.getColumns(); c++) {
+            for (int l = line; l < this.getLines() - 1; l++) {
+                this.positions[l][c] = this.positions[l + 1][c];
+            }
+        }
+        this.lines--;
+        this.updateMatrix();
+    }
+
     protected int getColumns() {
         return columns;
     }
 
     private void setColunms(int columns) {
         this.columns = columns;
+    }
+
+    protected void removeCollumn(int column) {
+        for (int l = 0; l < this.getLines(); l++) {
+            for (int c = column; c < this.getColumns() - 1; c++) {
+                this.positions[l][c] = this.positions[l][c + 1];
+            }
+        }
+        this.columns--;
+        this.updateMatrix();
     }
 
     protected void addCell(Cell<T> cell) {
@@ -60,7 +81,7 @@ public class Matrix<T> {
 
     protected Cell<T> getCell(T value) {
         for (Cell<T> cell : cells) {
-            if (this.equals(value))
+            if (cell.getValue().equals(value))
                 return cell;
         }
         return null;
@@ -70,15 +91,9 @@ public class Matrix<T> {
         return this.cells.set(this.positions[newer.getLine()][newer.getColumn()], newer);
     }
 
-    public void print() {
-        for (Cell<T> c : this.cells) {
-            System.out.println("line = "
-                    + c.getLine()
-                    + ", column = "
-                    + c.getColumn()
-                    + ", value = "
-                    + c.getValue().toString());
-        }
+    protected void removeCell(Cell<T> toRemove) {
+        this.cells.remove(toRemove);
+        this.positions[toRemove.getLine()][toRemove.getColumn()] = -1;
     }
 
     @Override
@@ -105,12 +120,12 @@ public class Matrix<T> {
                 this.setLines(line + 1);
             if (column > this.getColumns() - 1)
                 this.setColunms(column + 1);
-            grow();
+            updateMatrix();
             this.positions[line][column] = value;
         }
     }
 
-    private void grow() {
+    private void updateMatrix() {
         int[][] aux = new int[this.getLines()][this.getColumns()];
         for (int l = 0; l < this.getLines(); l++) {
             for (int c = 0; c < this.getColumns(); c++) {

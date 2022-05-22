@@ -1,56 +1,53 @@
 package graph;
 
-import graph.components.Component;
-import graph.components.edge.Edge;
-import graph.components.vertex.Vertex;
-import graph.matrix.AdjacencyMatrix;
-import graph.matrix.Cell;
-import services.DecoStrings;
+import graph.components.Edge;
+import graph.components.Vertex;
+import matrix.AdjacenceMatrix;
 
-public abstract class Graph<V extends Vertex, E extends Edge, A extends AdjacencyMatrix<V, E>> {
-    protected A matrix;
-    private int lastVertex;
+public class Graph<V extends Vertex<? extends Number>, E extends Edge<? extends Number>> extends AdjacenceMatrix<V, E> {
 
     public Graph() {
         super();
-        this.lastVertex = 0;
     }
 
-    protected int getLastVertex() {
-        return ++this.lastVertex;
-    }
-
-    protected Cell<Component> getCell(int componentId) {
-        for (Cell<Component> cell : this.matrix.getCells()) {
-            if (cell.getValue().getId() == componentId)
-                return cell;
+    @SuppressWarnings("unchecked")
+    public E getEdge(int id) {
+        try {
+            return (E) this.getComponent(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public int getPositionOf(int vertexId) {
-        Cell<Component> vertex = this.getCell(vertexId);
-        return vertex.getLine() + vertex.getColumn();
+    @SuppressWarnings("unchecked")
+    public V getVertex(int id) {
+        try {
+            return (V) this.getComponent(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public String matrixToString(){
-        return this.matrix.toString();
+    public void addComponent(V v) {
+        this.addVertex(v);
+    }
+
+    public void addComponent(E e) {
+        this.addEdge(e);
+    }
+
+    public void removeComponent(E e) {
+        this.removeEdge(e);
+    }
+
+    public void removeComponent(V e) {
+        this.removeVertex(e);
     }
 
     @Override
     public String toString() {
-        String s = new String();
-        s += DecoStrings.YELLOW("----------------------------------------\n");
-        s += DecoStrings.BLUE("Vertexs:\n");
-        for (Vertex v : this.matrix.getAllVertexs()) {
-            s += v + "\n";
-        }
-        s += DecoStrings.YELLOW("----------------------------------------\n");
-        s += DecoStrings.GREEN("Edges:\n");
-        for (Edge e : this.matrix.getAllEdges()) {
-            s += e + "\n";
-        }
-        s += DecoStrings.YELLOW("----------------------------------------\n");
-        return s + this.matrix;
+        return super.toString();
     }
 }

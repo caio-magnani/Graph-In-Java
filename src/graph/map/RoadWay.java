@@ -1,15 +1,15 @@
-package map;
+package graph.map;
 
-import graph.components.edge.undirectional.ValorableUndirectionalEdge;
+import graph.components.Edge;
 import services.DecoStrings;
 
-public class RoadWay extends ValorableUndirectionalEdge<Double> implements Comparable<RoadWay> {
+public class RoadWay extends Edge<Double> implements Comparable<RoadWay> {
 
     public RoadWay(City c1, City c2) {
         super(c1.getName() + " <---> " + c2.getName(), c1.getId(), c2.getId(), calculateDistance(c1, c2));
     }
 
-    private static Double calculateDistance(City c1, City c2) {
+    public static Double calculateDistance(City c1, City c2) {
         final int R = 6371; // Radious of the earth
         Double lat1 = c1.getLat();
         Double lon1 = c1.getLng();
@@ -38,7 +38,11 @@ public class RoadWay extends ValorableUndirectionalEdge<Double> implements Compa
 
     @Override
     public int compareTo(RoadWay r) {
-        return this.getDistance().compareTo(r.getDistance());
+        try {
+            return this.getDistance().compareTo(r.getDistance());
+        } catch (NullPointerException e) {
+            return +1;
+        }
     }
 
     @Override
