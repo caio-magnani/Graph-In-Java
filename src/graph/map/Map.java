@@ -2,9 +2,10 @@ package graph.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 import graph.Graph;
+import graph.components.Component;
+import graph.components.Vertex;
 
 public class Map extends Graph<City, RoadWay> {
     public static final Double RADIO_OF_EARTH = Double.parseDouble("6378.1370");
@@ -32,7 +33,7 @@ public class Map extends Graph<City, RoadWay> {
             cities.remove(c);
             generateRoadsOf(c, cities);
         }
-        // filterRoadWays();
+        filterRoadWays();
     }
 
     private void generateRoadsOf(City c, ArrayList<City> cities) {
@@ -51,6 +52,19 @@ public class Map extends Graph<City, RoadWay> {
             return returnRoadWays;
         } catch (IndexOutOfBoundsException e) {
             return roadWays;
+        }
+    }
+
+    private void filterRoadWays() {
+        ArrayList<RoadWay> toRemove = new ArrayList<>();
+        ArrayList<RoadWay> toStay = new ArrayList<>();
+        for (City c : this.getAllVertexs()) {
+            toStay.addAll(this.the3Closest(c));
+        }
+        toRemove.addAll(this.getAllEdges());
+        toRemove.removeAll(toStay);
+        for (RoadWay r : toRemove) {
+            this.removeEdge(r);
         }
     }
 
