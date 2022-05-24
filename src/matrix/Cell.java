@@ -35,16 +35,9 @@ public class Cell<T> {
         this.column = column;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean equals(Object obj) {
-        Cell<T> objCell = null;
-        try {
-            objCell = (Cell<T>) obj;
-        } catch (ClassCastException e) {
-            return false;
-        }
-        return (this.getValue().equals(objCell.getValue()));
+    public static Cell getNull(Cell toBeNull) {
+        toBeNull.setValue(null);
+        return toBeNull;
     }
 
     @Override

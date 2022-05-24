@@ -13,25 +13,26 @@ public class Matrix<T> {
         this.lines = 1;
         this.columns = 1;
         this.positions = new int[lines][columns];
+        this.positions[0][0] = -1;
     }
 
-    protected void addValue(T value, int line, int column) {
+    public void addValue(T value, int line, int column) {
         Cell<T> newer = new Cell<T>(value, line, column);
         this.cells.add(newer);
         this.set(line, column, this.cells.indexOf(newer));
     }
 
-    protected T getValue(int line, int column) {
+    public T getValue(int line, int column) {
         return cells.get(this.positions[line][column]).getValue();
     }
 
-    protected void setValue(T value, int line, int column) {
+    public void setValue(T value, int line, int column) {
         cells.set(this.positions[line][column], new Cell<T>(value, line, column));
     }
 
-    protected void removeValue(T value) {
+    public void removeValue(T value) {
         Cell<T> toRemove = this.getCell(value);
-        this.removeCell(toRemove);
+        this.cells.set(this.cells.indexOf(toRemove), Cell.getNull(toRemove));
     }
 
     protected int getLines() {
@@ -112,6 +113,7 @@ public class Matrix<T> {
     }
 
     // positions manipulations
+
     private void set(int line, int column, int value) {
         try {
             this.positions[line][column] = value;
